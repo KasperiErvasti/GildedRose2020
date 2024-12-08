@@ -102,6 +102,7 @@ public class GildedRoseTest {
 		assertEquals("Failed quality for Dexterity Vest", 0, quality);
 	}
 	
+
 	
 	@Test
 	public void test_BackstageQualityIncrease() {
@@ -265,5 +266,49 @@ public class GildedRoseTest {
 		assertEquals("Failed quality for Sulfuras", 21, quality);
 		assertEquals("Failed sellIn for Sulfuras", 14, sellIn);
 	}
+	
+	@Test
+	public void test_QualityWhenSellIn0() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Dagger", 1, 10));
+		inn.oneDay();
+
+		
+		List<Item> items = inn.getItems();
+		int sellIn = items.get(0).getSellIn();
+		int quality = items.get(0).getQuality();
+		
+		assertEquals("Failed sellIn for Dagger", 0, sellIn);
+		assertEquals("Failed quality for Dagger", 9, quality);
+	}
+	
+	
+	@Test
+	public void test_BackstageAt50() {
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert", 2, 49));
+		inn.oneDay();
+
+		
+		List<Item> items = inn.getItems();
+		int quality = items.get(0).getQuality();
+		
+		assertEquals("Failed quality for Backstage passes to a TAFKAL80ETC concert", 50, quality);
+	}
+	
+    @Test
+    public void test_BrieAgingNegativeSellIn() {
+        GildedRose inn = new GildedRose();
+        inn.setItem(new Item("Aged Brie", 0, 47));
+        inn.oneDay();
+
+        List<Item> items = inn.getItems();
+        int quality = items.get(0).getQuality();
+
+        assertEquals("Failed quality for Aged Brie", 49, quality);
+    }
+	
+	
+	
 	
 }
