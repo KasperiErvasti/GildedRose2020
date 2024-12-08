@@ -2,6 +2,7 @@ package fi.oulu.tol.sqat.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -168,5 +169,101 @@ public class GildedRoseTest {
 		assertEquals("Failed sellIn for Sulfuras, Hand of Ragnaros", 100, sellIn);
 	}
 	
+	@Test
+	public void test_LoopTest() {
+		// 0 loops
+		GildedRose inn = new GildedRose();
+		inn.oneDay(); // 0 loops
+		
+		List<Item> items = inn.getItems();
+		
+		assertEquals("Failed", 0, items.size());
+		
+		// 1 loop
+		inn.setItem(new Item("+5 Dexterity Vest", 10, 20));
+		inn.oneDay(); // 1 loop
+		items = inn.getItems();
+		
+		int quality = items.get(0).getQuality();
+		int sellIn = items.get(0).getSellIn();
+		
+		assertEquals("Failed quality for Dexterity Vest", 19, quality);
+		assertEquals("Failed sellIn for Dexterity Vest", 9, sellIn);
+		
+		// 2 Loops
+		inn.setItem(new Item("Aged Brie", 10, 20));
+		inn.oneDay(); // 2 loops
+		
+		items = inn.getItems();
+		
+		quality = items.get(0).getQuality();
+		sellIn = items.get(0).getSellIn();
+		
+		assertEquals("Failed quality for Dexterity Vest", 18, quality);
+		assertEquals("Failed sellIn for Dexterity Vest", 8, sellIn);
+		
+		quality = items.get(1).getQuality();
+		sellIn = items.get(1).getSellIn();
+		
+		assertEquals("Failed quality for Aged Brie", 21, quality);
+		assertEquals("Failed sellIn for Aged Brie", 9, sellIn);
+		
+		
+		
+		// 3 Loops
+		inn.setItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
+		inn.oneDay(); // 3 loops
+		
+		items = inn.getItems();
+		
+		quality = items.get(0).getQuality();
+		sellIn = items.get(0).getSellIn();
+		
+		assertEquals("Failed quality for Dexterity Vest", 17, quality);
+		assertEquals("Failed sellIn for Dexterity Vest", 7, sellIn);
+		
+		quality = items.get(1).getQuality();
+		sellIn = items.get(1).getSellIn();
+		
+		assertEquals("Failed quality for Aged Brie", 22, quality);
+		assertEquals("Failed sellIn for Aged Brie", 8, sellIn);
+		
+		quality = items.get(2).getQuality();
+		sellIn = items.get(2).getSellIn();
+		
+		assertEquals("Failed quality for Sulfuras", 80, quality);
+		assertEquals("Failed sellIn for Sulfuras", 0, sellIn);
+		
+		
+		// 4 Loops
+		inn.setItem(new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20));
+		inn.oneDay(); // 4 loops
+		
+		items = inn.getItems();
+		
+		quality = items.get(0).getQuality();
+		sellIn = items.get(0).getSellIn();
+		
+		assertEquals("Failed quality for Dexterity Vest", 16, quality);
+		assertEquals("Failed sellIn for Dexterity Vest", 6, sellIn);
+		
+		quality = items.get(1).getQuality();
+		sellIn = items.get(1).getSellIn();
+		
+		assertEquals("Failed quality for Aged Brie", 23, quality);
+		assertEquals("Failed sellIn for Aged Brie", 7, sellIn);
+		
+		quality = items.get(2).getQuality();
+		sellIn = items.get(2).getSellIn();
+		
+		assertEquals("Failed quality for Sulfuras", 80, quality);
+		assertEquals("Failed sellIn for Sulfuras", 0, sellIn);
+		
+		quality = items.get(3).getQuality();
+		sellIn = items.get(3).getSellIn();
+		
+		assertEquals("Failed quality for Sulfuras", 21, quality);
+		assertEquals("Failed sellIn for Sulfuras", 14, sellIn);
+	}
 	
 }
